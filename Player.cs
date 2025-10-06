@@ -11,7 +11,15 @@ public partial class Player : CharacterBody3D
 
     // The downward acceleration when in the air, in meters per second squared.
     [Export] 
-    public int FallAcceleration { get; set; } = 75;
+    public int FallAcceleration { get; set; } = 75; 
+    
+    // Vertical impulse applied to the character upon jumping in meters per second.
+    [Export] 
+    public int JumpImpulse { get; set; } = 20;
+    
+    // Vertical impulse applied to the character upon bouncing over a mob in meters per second.
+    [Export] 
+    public int BounceImpulse { get; set; } = 16;
 
     private Vector3 _targetVelocity = Vector3.Zero;
 
@@ -59,6 +67,37 @@ public partial class Player : CharacterBody3D
         
         // Moving the character
         Velocity = _targetVelocity;
+        
+        // Jumping.
+        if (IsOnFloor() && Input.IsActionJustPressed("jump"))
+        {
+            _targetVelocity.Y = JumpImpulse;
+        }
+        
+        // Iterate through all collisions that occurred this frame.
+        for (int index = 0; index < GetSlideCollisionCount(); index++)
+        {
+            // We get one of the collisions with the player.
+            KinematicCollision3D collision = GetSlideCollision(index);
+            
+            // If the collision is with a mob.
+            // With C# we leverage typing and pattern-matching
+            // instead of checking for the group we created.
+            if (collision.GetCollider() is Mob mob)
+            {
+                // We check that we are hitting it from above. We count it's from above
+                // if the angle of the hit is more than cos(0.2) (36degrees)
+                if (Vector3.Up.Dot(collision.GetNormal()) > 0.2f)
+                {
+                    // If so, we squash it and bounce.
+                    mob.Squash();
+                    _targetVelocity.Y = BounceImpulse;
+                    // Prevent further duplicate calls.
+                    break;
+                }
+            }
+        }
+        
         MoveAndSlide();
     }
 }
