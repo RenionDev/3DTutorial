@@ -26,8 +26,8 @@ public partial class Mob : CharacterBody3D
     public void Initialize(Vector3 startPosition, Vector3 playerPosition)
     {
         // We position the mob by placing it at startPosition
-        // and rotate it towards playerPosition, so it looks at the player.
-        LookAtFromPosition(startPosition, playerPosition);
+        // and rotate it towards playerPosition, so it looks at the player position without it's current height (Y) pos.
+        LookAtFromPosition(startPosition, new Vector3(playerPosition.X, 0, playerPosition.Z));
         // Rotate this mob randomly within range of -45 and +45 degrees,
         // so that it doesn't move directly towards the player.
         RotateY((float)GD.RandRange(-Mathf.Pi / 4, Mathf.Pi / 4));
