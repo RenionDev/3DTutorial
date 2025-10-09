@@ -52,11 +52,14 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_7dm0k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -0.045618534)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19999993, -0.045618534)
 mesh = SubResource("BoxMesh_ig7tw")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.16460009, 0.98636043, 0, -0.98636043, 0.16460009, 0, 6.991441, 0)
+shadow_enabled = true
+shadow_bias = 0.134
+shadow_blur = 0.898
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
 
@@ -140,6 +143,7 @@ grow_vertical = 2
 text = "Press Enter to Retry"
 
 [node name="PlayerWalls" type="StaticBody3D" parent="."]
+visible = false
 collision_layer = 4
 
 [node name="South" type="CollisionShape3D" parent="PlayerWalls"]
