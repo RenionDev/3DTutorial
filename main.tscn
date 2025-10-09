@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cb35imu2w7aqq"]
+[gd_scene load_steps=15 format=3 uid="uid://cb35imu2w7aqq"]
 
 [ext_resource type="Script" uid="uid://b4t6fuv075wyr" path="res://Main.cs" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://7kqq8xm2dvow" path="res://player.tscn" id="1_ig7tw"]
@@ -29,6 +29,15 @@ point_count = 4
 [sub_resource type="Theme" id="Theme_272bh"]
 default_font = ExtResource("4_lquwl")
 default_font_size = 22
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lquwl"]
+size = Vector3(26, 16, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
+size = Vector3(1, 17, 31.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_272bh"]
+size = Vector3(1, 18, 31.4)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_h2yge")
@@ -129,6 +138,29 @@ offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Press Enter to Retry"
+
+[node name="PlayerWalls" type="StaticBody3D" parent="."]
+collision_layer = 4
+
+[node name="South" type="CollisionShape3D" parent="PlayerWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4995, 15)
+shape = SubResource("BoxShape3D_lquwl")
+debug_color = Color(0.9975118, 0, 0.1742886, 0.41960785)
+
+[node name="North" type="CollisionShape3D" parent="PlayerWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4995, -14)
+shape = SubResource("BoxShape3D_lquwl")
+debug_color = Color(0.9975118, 0, 0.1742886, 0.41960785)
+
+[node name="West" type="CollisionShape3D" parent="PlayerWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0.19999981)
+shape = SubResource("BoxShape3D_7mycd")
+debug_color = Color(0.9975118, 0, 0.1742886, 0.41960785)
+
+[node name="East" type="CollisionShape3D" parent="PlayerWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.800001, 0, 0.19999981)
+shape = SubResource("BoxShape3D_272bh")
+debug_color = Color(0.9975118, 0, 0.1742886, 0.41960785)
 
 [connection signal="Hit" from="Player" to="." method="OnPlayerHit"]
 [connection signal="timeout" from="MobTimer" to="." method="OnMobTimerTimeout"]
