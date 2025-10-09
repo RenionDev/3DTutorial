@@ -14,6 +14,10 @@ config/name="3dTutorial"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="uid://nev7b6ohgeo"
 
+[autoload]
+
+MusicPlayer="*res://music_player.tscn"
+
 [display]
 
 window/size/viewport_width=720
