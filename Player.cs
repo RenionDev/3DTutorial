@@ -76,6 +76,11 @@ public partial class Player : CharacterBody3D
         if (!IsOnFloor()) // If in the air, fall towards the floor. Literally Gravity
         {
             _targetVelocity.Y -= FallAcceleration * (float)delta;
+            GetNode<AnimationPlayer>("AnimationPlayer").Pause();
+        }
+        else
+        {
+            GetNode<AnimationPlayer>("AnimationPlayer").Play();
         }
         
         // Moving the character
